@@ -2,6 +2,7 @@ import os
 from hw05_easy import create_dir, remove_dir, show_dirs
 
 __author__ = 'Ivan Povalyaev'
+
 # Задача-1:
 # Напишите небольшую консольную утилиту,
 # позволяющую работать с папками текущей директории.
