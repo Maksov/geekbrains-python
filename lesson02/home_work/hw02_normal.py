@@ -3,8 +3,7 @@ from datetime import datetime as dt
 import locale
 from num2words import num2words
 from random import randint
-
-__author__ = 'Поваляев Иван'
+__author__ = 'Povalyaev Ivan'
 # Задача-1:
 # Дан список, заполненный произвольными целыми числами,
 # получите новый список, элементами которого будут

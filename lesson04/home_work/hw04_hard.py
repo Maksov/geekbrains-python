@@ -1,5 +1,5 @@
 from functools import reduce
-__author__ = 'Поваляев Иван'
+__author__ = 'Povalyaev Ivan'
 # Задание-1:
 # Матрицы в питоне реализуются в виде вложенных списков:
 # Пример. Дано:

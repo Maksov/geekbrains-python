@@ -1,7 +1,7 @@
 import os
 import re
 from copy import deepcopy
-__author__ = 'Поваляев Иван'
+__author__ = 'Povalyaev Ivan'
 # Задание-1:
 # Написать программу, выполняющую операции
 # (сложение и вычитание) с простыми дробями.

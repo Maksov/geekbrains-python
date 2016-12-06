@@ -1,4 +1,4 @@
-__author__ = 'Поваляев Иван'
+__author__ = 'Povalyaev Ivan'
 # Задание-1:
 # Ваня набрал несколько операций в интерпретаторе и получал результаты:
 # 	Код: a == a**2
@@ -24,6 +24,7 @@ class A(object):
 
     def __gt__(self, other):
         return True
+
 
 a = A()
 print(a == a ** 2)

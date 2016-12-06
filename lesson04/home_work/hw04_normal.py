@@ -1,6 +1,6 @@
 import re
 from random import randint
-__author__ = 'Поваляев Иван'
+__author__ = 'Povalyaev Ivan'
 
 # Задание-1:
 # Вывести символы в нижнем регистре, которые окружают 1 или
@@ -17,16 +17,8 @@ def find_by_re_in_line(line=None, pattern=None):
 
 
 def find_in_line(line):
-    result_list = []
-    str_element = ''
-    for symbol in line:
-        if symbol.islower():
-            str_element += symbol
-        else:
-            if len(str_element) > 0:
-                result_list.append(str_element)
-                str_element = ''
-    return result_list
+    result_list = [x if x.islower() else ' ' for x in line if x.isalnum()]
+    return ''.join(result_list).split()
 
 
 # Задание-2:

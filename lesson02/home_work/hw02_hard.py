@@ -1,9 +1,18 @@
+from datetime import datetime as dt
+__author__ = 'Povalyaev Ivan'
+
 # Задание-1: уравнение прямой вида y = kx - b задано ввиде строки.
 # Определить координату y, точки с заданной координатой x
-
-equation = 'y = -12x + 11111140.2121'
-x = 2.5
 # вычислите и выведите y
+
+
+def get_equation_value(equation, x):
+    parted_equation = equation.split('=')[1].split('+')
+    k_coefficient = float(parted_equation[0].split('x')[0].strip())
+    b_coefficient = float(parted_equation[1].strip())
+    y_value = k_coefficient * x + b_coefficient
+    return 'y = {}'.format(y_value)
+
 
 # Задание-2: Дата задана в виде строки формата 'dd.mm.yyyy'.
 # Проверить, корректно ли введена дата.
@@ -16,13 +25,16 @@ x = 2.5
 # 4. Длина исходной строки для частей должна быть в соответствии с форматом
 # (т.е. 2 - для дня, 2- месяц, 4 -год)
 
-# Пример корректной даты
-date = '01.11.1985'
+def correct_date(date):
+    if len(date) == 10:
+        try:
+            dt.strptime(date, '%d.%m.%Y')
+            return '{} - корректная дата'.format(date)
+        except ValueError:
+            return '{} - некорректная дата'.format(date)
+    else:
+        return '{} - некорректная дата'.format(date)
 
-# Примеры некорректных дат
-date = '01.22.1001'
-date = '1.12.1001'
-date = '-2.10.3001'
 
 # Задание-3: "Перевернутая башня" (Задача олимпиадного уровня)
 #
@@ -56,3 +68,19 @@ date = '-2.10.3001'
 #
 # Вход: 11
 # Выход: 5 3
+
+def get_floor_and_order(flat):
+    pass
+
+
+if __name__ == '__main__':
+    equation = 'y = -12x + 11111140.2121'
+    x = 2.5
+    print(get_equation_value(equation, x))
+    print(correct_date('01.11.1985'))
+    print(correct_date('01.22.1001'))
+    print(correct_date('1.12.1001'))
+    print(correct_date('-2.10.3001'))
+    print(get_floor_and_order(1))
+    print(get_floor_and_order(13))
+    print(get_floor_and_order(4))
