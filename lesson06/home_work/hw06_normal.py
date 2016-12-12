@@ -43,10 +43,12 @@ class People:
 
 class Student(People):
 
-    def __init__(self, lastname, firstname, patronymic, class_room):
+    def __init__(self, lastname, firstname, patronymic, class_room, father, mother):
         super().__init__(lastname, firstname, patronymic)
         self._class_room = {'class_num': class_room.split()[0],
                             'class_letter': class_room.split()[1]}
+        self.father = father
+        self.mother = mother
 
     @property
     def class_room(self):
@@ -70,23 +72,23 @@ class Teacher(People):
                                  self.__repr__(), class_room))
 
 
-class Parents(People):
-    pass
-
-
 if __name__ == '__main__':
 
     class_rooms = ['5 A', '6 B', '7 D', '8 A']
 
     students = [
-        Student('Ivanov', 'Ivan', 'Ivanovich', class_rooms[
-                randint(0, len(class_rooms) - 1)]),
-        Student('Petrov', 'Peter', 'Petrovich', class_rooms[
-                randint(0, len(class_rooms) - 1)]),
-        Student('Sidorov', 'Egor', 'Egorovich', class_rooms[
-                randint(0, len(class_rooms) - 1)]),
-        Student('Fedorov', 'Sergey', 'Victorovich', class_rooms[
-                randint(0, len(class_rooms) - 1)])
+        Student('Ivanov', 'Ivan', 'Ivanovich', class_rooms[randint(0, len(
+            class_rooms) - 1)], People('Ivanov', 'Ivan', 'Sergeevich'),
+            People('Ivanova', 'Darya', 'Petrovna')),
+        Student('Petrov', 'Peter', 'Petrovich', class_rooms[randint(0, len(
+            class_rooms) - 1)], People('Petrov', 'Peter', 'Sergeevich'),
+            People('Petrova', 'Anya', 'Petrovna')),
+        Student('Sidorov', 'Egor', 'Egorovich', class_rooms[randint(0, len(
+            class_rooms) - 1)], People('Sidorov', 'Egor', 'Sergeevich'),
+            People('Sidorova', 'Katya', 'Petrovna')),
+        Student('Fedorov', 'Sergey', 'Victorovich', class_rooms[randint(0, len(
+            class_rooms) - 1)], People('Fedorov', 'Victor', 'Sergeevich'),
+            People('Fedorova', 'Lena', 'Petrovna'))
     ]
 
     teachers = [
@@ -114,6 +116,8 @@ if __name__ == '__main__':
                                                                    subjects))
     # Задача-4
     student = students[randint(0, len(students) - 1)]
+    print('Student {} father: {}'.format(student, student.father))
+    print('Student {} mother: {}'.format(student, student.mother))
     # Задача-5
     # 5. Получить список всех Учителей, преподающих в указанном классе
     class_room = class_rooms[randint(0, len(class_rooms) - 1)]
