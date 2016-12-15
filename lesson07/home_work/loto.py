@@ -61,26 +61,21 @@ __author__ = 'Ivan Povalyaev'
 """
 
 
-class PlayerInitError(Exception):
-    pass
-
-
-class GameInitError(Exception):
-    pass
-
-
 class Ticket:
 
     def __init__(self):
-        self.ticket = [[' ' for x in range(9)] for y in range(3)]
+        self.ticket = [' ' for x in range(27)]
         random_nums = sorted(sample(range(1, 91), 15), reverse=True)
-        for row in self.ticket:
-            random_index = sorted(sample(range(0, 9), 5))
-            for index in random_index:
-                row[index] = random_nums.pop()
+        random_indexes = sample(range(9), 5)
+        random_indexes += sample(range(9, 18), 5)
+        random_indexes += sample(range(18, 27), 5)
+        for index in sorted(random_indexes):
+            self.ticket[index] = random_nums.pop()
 
     def __str__(self):
-        return '{}\n{}\n{}'.format(*self.ticket)
+        return '{}\n{}\n{}'.format('  '.join(str(x) for x in self.ticket[:9]),
+                                   '  '.join(str(x) for x in self.ticket[9:18]),
+                                   '  '.join(str(x) for x in self.ticket[18:]))
 
     def __repr__(self):
         return self.__str__()
@@ -110,21 +105,6 @@ class Bag:
         return self.__str__()
 
 
-class Player:
-
-    def __init__(self, **kwargs):
-        self.name = kwargs.get('name', None)
-        if self.name is None:
-            raise RuntimeError("Player variable 'name' wasn't properly setted")
-        self.type = kwargs.get('computer', False)
-        self.ticket = Ticket()
-
-    def __str__(self):
-        return self.name
-
-    def __repr__(self):
-        return self.__str__()
-
 
 class Game:
 
@@ -133,14 +113,25 @@ class Game:
         self.player2 = kwargs.get('player2', None)
         if self.player1 is None or self.player2 is None:
             raise RuntimeError("'player1' or 'player2' wasn't properly setted")
+        self.bag = Bag()
 
     def start(self):
-        pass
+        game_in_progress = True
+        for number in self.bag:
+            while game_in_progress:
+                print('Новый бочонок: {} (осталось {})'.format(
+                    number, self.bag.index))
+                print('------ Ваша карточка -----')
+                print(self.player1.ticket)
+                print('--------------------------')
+                print('-- Карточка компьютера ---')
+                print(self.player2.ticket)
+                print('--------------------------')
+                answer = input('Зачеркнуть цифру? (y/n): ')
+                if answer == 'y':
+                    raise Exception
 
 
 if __name__ == '__main__':
-    player1 = Player(name='Ivan')
-    player3 = Player()
-    player2 = Player(name='Comp', computer=True)
-    game = Game(player1=player1, player2=player2)
+    game = Game()
     game.start()
