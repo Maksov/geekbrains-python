@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+import os
 from random import shuffle, sample
 __author__ = 'Ivan Povalyaev'
 
@@ -74,11 +75,22 @@ class Ticket:
 
     def __str__(self):
         return '{}\n{}\n{}'.format('  '.join(str(x) for x in self.ticket[:9]),
-                                   '  '.join(str(x) for x in self.ticket[9:18]),
+                                   '  '.join(str(x)
+                                             for x in self.ticket[9:18]),
                                    '  '.join(str(x) for x in self.ticket[18:]))
 
     def __repr__(self):
         return self.__str__()
+
+    def __iter__(self):
+        return iter(self.ticket)
+
+    @property
+    def empty(self):
+        return not any(str(x).isnumeric() for x in set(self.ticket))
+
+    def check(self, value):
+        self.ticket = ['-' if x == value else x for x in self.ticket]
 
 
 class Bag:
@@ -105,33 +117,49 @@ class Bag:
         return self.__str__()
 
 
-
 class Game:
 
-    def __init__(self, **kwargs):
-        self.player1 = kwargs.get('player1', None)
-        self.player2 = kwargs.get('player2', None)
-        if self.player1 is None or self.player2 is None:
-            raise RuntimeError("'player1' or 'player2' wasn't properly setted")
+    def __init__(self):
+        self.ticket1 = Ticket()
+        self.ticket2 = Ticket()
         self.bag = Bag()
 
     def start(self):
-        game_in_progress = True
+        os.system('cls' if os.name == 'nt' else 'clear')
         for number in self.bag:
-            while game_in_progress:
-                print('Новый бочонок: {} (осталось {})'.format(
-                    number, self.bag.index))
-                print('------ Ваша карточка -----')
-                print(self.player1.ticket)
-                print('--------------------------')
-                print('-- Карточка компьютера ---')
-                print(self.player2.ticket)
-                print('--------------------------')
-                answer = input('Зачеркнуть цифру? (y/n): ')
-                if answer == 'y':
-                    raise Exception
+            print('Новый бочонок: {} (осталось {})'.format(
+                number, self.bag.index))
+            print('-------- Ваша карточка -------')
+            print(self.ticket1)
+            print('------------------------------')
+            print('---- Карточка компьютера -----')
+            print(self.ticket2)
+            print('------------------------------')
+            answer = input('Зачеркнуть цифру? (y/n): ')
+            if answer not in ('y', 'n'):
+                result = 'Вы проиграли.'
+                break
+            if answer == 'y' and number not in self.ticket1:
+                result = 'Вы проиграли.'
+                break
+            elif answer == 'n' and number in self.ticket1:
+                result = 'Вы проиграли.'
+                break
+            if number in self.ticket1:
+                self.ticket1.check(number)
+            if self.ticket1.empty:
+                result = 'Поздравляем. Вы выиграли!'
+                break
+            if number in self.ticket2:
+                self.ticket2.check(number)
+            if self.ticket2.empty:
+                result = 'Вы проиграли.'
+                break
+            os.system('cls' if os.name == 'nt' else 'clear')
+        print(result)
 
 
 if __name__ == '__main__':
     game = Game()
     game.start()
+    input()
