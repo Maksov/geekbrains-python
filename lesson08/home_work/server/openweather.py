@@ -22,5 +22,5 @@ if __name__ == '__main__':
     with open('app.id', 'r') as f:
         data = f.read()
         app_id = data.split('=')[1].strip()
-        print(app_id)
     weather = OpenWeather(app_id)
+    print(weather.get_by_id(524901))
